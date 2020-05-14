@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Main2Activity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="布局操作" />
+
+    <org.ms.view.navigation.NavigationView
+
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true">
+
+        <org.ms.view.navigation.NavigationChildItemView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:navigationChildDrawable="@drawable/tab_bar_message"
+            app:navigationChildText="消息" />
+
+        <org.ms.view.navigation.NavigationChildItemView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:navigationChildDrawable="@drawable/tab_bar_tool"
+            app:navigationChildText="工具" />
+
+
+        <org.ms.view.navigation.NavigationChildItemView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:navigationChildDrawable="@drawable/tab_bar_my"
+            app:navigationChildText="我的" />
+
+    </org.ms.view.navigation.NavigationView>
+
+
+</RelativeLayout>

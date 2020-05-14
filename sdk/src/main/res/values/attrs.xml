@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="navigation_view">
+        <attr name="navigationBackgroundColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="navigation_child_view">
+        <attr name="navigationChildTextSize" format="integer" />
+        <attr name="navigationChildTextColor" format="color" />
+        <attr name="navigationChildImageWidth" format="integer" />
+        <attr name="navigationChildImageHeight" format="integer" />
+        <attr name="navigationChildText" format="string" />
+        <attr name="navigationChildDrawable" format="reference" />
+    </declare-styleable>
+</resources>
