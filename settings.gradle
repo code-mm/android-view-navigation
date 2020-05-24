@@ -1,3 +1,3 @@
-rootProject.name='navigation'
+rootProject.name='view-navigation'
 include ':app'
 include ':sdk'

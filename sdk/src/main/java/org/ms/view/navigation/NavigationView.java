@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NavigationView extends LinearLayout {
+public class NavigationView extends LinearLayout implements NavigationViewAdapter.INavigationViewDataChange {
     private Context context;
 
     private int navigation_navigationBackgroundColor = Color.WHITE;
@@ -48,23 +48,29 @@ public class NavigationView extends LinearLayout {
     private List<NavigationChildItemView> childItemViews = new ArrayList<>();
 
 
-    public void addItem(NavigationChildItemView item) {
-        if (item == null) {
-            return;
+//    public void addItem(NavigationChildItemView item) {
+//        if (item == null) {
+//            return;
+//        }
+//        childItemViews.add(item);
+//        this.addView(item);
+//        ((LayoutParams) item.getLayoutParams()).weight = 1;
+//        item.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                reSetSelected();
+//                item.getImageViewIcon().setSelected(true);
+//                if (onItemClickListener != null) {
+//                    onItemClickListener.onItemClick(v, item);
+//                }
+//            }
+//        });
+//    }
+
+    public void removeItem(NavigationChildItemView item) {
+        if (item != null) {
+            this.removeView(item);
         }
-        childItemViews.add(item);
-        this.addView(item);
-        ((LayoutParams) item.getLayoutParams()).weight = 1;
-        item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reSetSelected();
-                item.getImageViewIcon().setSelected(true);
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(v, item);
-                }
-            }
-        });
     }
 
     private void reSetSelected() {
@@ -81,10 +87,47 @@ public class NavigationView extends LinearLayout {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public interface OnItemClickListener {
+    @Override
+    public void notificationDataChange() {
+        for (NavigationChildItemView it : childItemViews) {
+            this.removeView(it);
+        }
+        childItemViews.clear();
 
-        void onItemClick(View view, NavigationChildItemView navigationChildItemView);
-
+        List<NavigationViewItem> datas = adapter.getDatas();
+        for (NavigationViewItem item : datas) {
+            NavigationChildItemView childItemView = new NavigationChildItemView(context);
+            childItemView.createItemView(item);
+            childItemViews.add(childItemView);
+            this.addView(childItemView);
+            ((LayoutParams) childItemView.getLayoutParams()).weight = 1;
+            childItemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    reSetSelected();
+                    childItemView.getImageViewIcon().setSelected(true);
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(v, childItemView);
+                    }
+                }
+            });
+        }
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(View view, NavigationChildItemView navigationChildItemView);
+    }
+
+    public void setSelected(int position) {
+        if (childItemViews.size() > position) {
+            childItemViews.get(position).getImageViewIcon().setSelected(true);
+        }
+    }
+
+    private NavigationViewAdapter adapter;
+
+    public void setAdapter(NavigationViewAdapter adapter) {
+        this.adapter = adapter;
+        this.adapter.setDataChange(this);
+    }
 }

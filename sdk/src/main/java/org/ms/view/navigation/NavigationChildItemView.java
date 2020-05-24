@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,16 +49,16 @@ public class NavigationChildItemView extends RelativeLayout {
         }
         this.context = context;
 
-        Item item = new Item();
+        NavigationViewItem item = new NavigationViewItem();
         item.name = navigation_child_view_navigationChildText;
         item.drawable = navigation_child_view_navigationChildDrawable;
 
         createItemView(item);
     }
 
-    private Item item;
+    private NavigationViewItem item;
 
-    public Item getItem() {
+    public NavigationViewItem getItem() {
         return item;
     }
 
@@ -69,7 +70,7 @@ public class NavigationChildItemView extends RelativeLayout {
         return textViewName;
     }
 
-    public void createItemView(Item item) {
+    public void createItemView(NavigationViewItem item) {
 
         if (item == null) {
             return;
@@ -83,8 +84,8 @@ public class NavigationChildItemView extends RelativeLayout {
         imageViewIcon = new ImageView(context);
         imageViewIcon.setImageDrawable(item.drawable);
         RelativeLayout.LayoutParams imageViewIconLayoutParams = new RelativeLayout.LayoutParams(navigation_navigationChildImageWidth, navigation_navigationChildImageHeight);
-        imageViewIconLayoutParams.setMargins(2, -5, 2, 2);
-        imageViewIcon.setPadding(2, 2, 2, 2);
+        imageViewIconLayoutParams.setMargins(0, 10, 0, 0);
+        imageViewIcon.setPadding(0, 0, 0, 0);
         imageViewIcon.setLayoutParams(imageViewIconLayoutParams);
         imageViewIcon.setId(View.generateViewId());
         this.addView(imageViewIcon);
@@ -92,24 +93,16 @@ public class NavigationChildItemView extends RelativeLayout {
         textViewName = new TextView(context);
         textViewName.setText(item.name);
         RelativeLayout.LayoutParams textViewNameLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        textViewNameLayoutParams.setMargins(2, 2, 2, 2);
-        textViewName.setPadding(2, 2, 2, 2);
+        textViewNameLayoutParams.setMargins(0, 5, 0, 0);
+        textViewName.setPadding(0, 0, 0, 0);
         textViewName.setTextSize(navigation_navigationChildTextSize);
         textViewName.setLayoutParams(textViewNameLayoutParams);
         textViewName.setTextColor(navigation_navigationChildTextColor);
         this.addView(textViewName);
 
-        ((RelativeLayout.LayoutParams) imageViewIcon.getLayoutParams()).addRule(RelativeLayout.CENTER_IN_PARENT);
+        ((RelativeLayout.LayoutParams) imageViewIcon.getLayoutParams()).addRule(RelativeLayout.CENTER_HORIZONTAL);
         ((RelativeLayout.LayoutParams) textViewName.getLayoutParams()).addRule(RelativeLayout.CENTER_HORIZONTAL);
         ((RelativeLayout.LayoutParams) textViewName.getLayoutParams()).addRule(RelativeLayout.BELOW, imageViewIcon.getId());
 
-    }
-
-    public static class Item {
-        public Drawable drawable;
-        public String name;
-        public int textSize;
-        public Color textColor;
-        public Color backgroundColor;
     }
 }
